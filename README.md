@@ -1,1 +1,1 @@
-# Spring Boot E-commerce Project
+# Spring Boot E-Commerce Project
