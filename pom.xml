@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>ecommerce-backend</name>
     <description>ecommerce-backend</description>
+    <packaging>jar</packaging>
     <url/>
     <licenses>
         <license/>
@@ -57,6 +58,7 @@
     </dependencies>
 
     <build>
+        <finalName>ecommerce-backend</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

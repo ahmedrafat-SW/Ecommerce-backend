@@ -11,8 +11,9 @@ public class WebConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         cors.addMapping("/**")
-                .allowedOrigins("http://localhost:4200/")
+                .allowedOrigins("http://localhost:4200/", "http://localhost")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true);    }
+                .allowCredentials(true);
+    }
 }
