@@ -5,7 +5,6 @@ pipeline {
         stage('build-database-image') {
             steps {
                 script {
-                    // Build the Docker image for the database
                     def ecommerce_db = docker.build("ecommerce_db:${env.BUILD_ID}", "-f ./Dockerfile .")
                 }
             }
@@ -14,11 +13,10 @@ pipeline {
         stage('run-database-image') {
             steps {
                 script {
-                    // Run the Docker container from the built image
-                    sh '''
+                    sh '''bash -c '
                         docker images
                         docker run -d -p 5433:5432 ecommerce_db:${env.BUILD_ID}
-                    '''
+                    ' '''
                 }
             }
         }
