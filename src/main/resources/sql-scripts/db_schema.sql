@@ -1,42 +1,38 @@
 -- -----------------------------------------------------
--- Schema full-stack-ecommerce
+-- Schema ecommerce_db
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `full-stack-ecommerce`;
-
-CREATE SCHEMA `full-stack-ecommerce`;
-USE `full-stack-ecommerce` ;
-
--- -----------------------------------------------------
--- Table `full-stack-ecommerce`.`product_category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `full-stack-ecommerce`.`product_category` (
-                                                                         `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-    `category_name` VARCHAR(255) NULL DEFAULT NULL,
-    PRIMARY KEY (`id`))
-    ENGINE=InnoDB
-    AUTO_INCREMENT = 1;
+-- DROP SCHEMA IF EXISTS public CASCADE;
+--
+-- CREATE SCHEMA ecommerce_db;
+-- SET search_path TO ecommerce_db;
 
 -- -----------------------------------------------------
--- Table `full-stack-ecommerce`.`product`
+-- Table ecommerce_db.product_category
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `full-stack-ecommerce`.`product` (
-                                                                `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-    `sku` VARCHAR(255) DEFAULT NULL,
-    `name` VARCHAR(255) DEFAULT NULL,
-    `description` VARCHAR(255) DEFAULT NULL,
-    `unit_price` DECIMAL(13,2) DEFAULT NULL,
-    `image_url` VARCHAR(255) DEFAULT NULL,
-    `active` BIT DEFAULT 1,
-    `units_in_stock` INT(11) DEFAULT NULL,
-    `date_created` DATETIME(6) DEFAULT NULL,
-    `last_updated` DATETIME(6) DEFAULT NULL,
-    `category_id` BIGINT(20) NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `fk_category` (`category_id`),
-    CONSTRAINT `fk_category` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`)
-    )
-    ENGINE=InnoDB
-    AUTO_INCREMENT = 1;
+CREATE TABLE IF NOT EXISTS product_category (
+    id BIGSERIAL PRIMARY KEY,
+    category_name VARCHAR(255) DEFAULT NULL,
+    date_created TIMESTAMP DEFAULT NULL,
+    last_updated TIMESTAMP DEFAULT NULL
+    );
+
+-- -----------------------------------------------------
+-- Table ecommerce_db.product
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS product (
+    id BIGSERIAL PRIMARY KEY,
+    sku VARCHAR(255) DEFAULT NULL,
+    name VARCHAR(255) DEFAULT NULL,
+    description VARCHAR(255) DEFAULT NULL,
+    unit_price NUMERIC(13, 2) DEFAULT NULL,
+    image_url VARCHAR(255) DEFAULT NULL,
+    active BOOLEAN DEFAULT TRUE,
+    units_in_stock INTEGER DEFAULT NULL,
+    date_created TIMESTAMP DEFAULT NULL,
+    last_updated TIMESTAMP DEFAULT NULL,
+    category_id BIGINT NOT NULL,
+    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES product_category (id)
+    );
 
 -- -----------------------------------------------------
 -- Categories
@@ -47,10 +43,7 @@ INSERT INTO product_category(category_name) VALUES ('Mouse Pads');
 INSERT INTO product_category(category_name) VALUES ('Luggage Tags');
 
 -- -----------------------------------------------------
--- Books
--- -----------------------------------------------------
-INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created)
-VALUES ('BOOK-TECH-1000', 'Crash Course in Python', 'Learn Python at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-luv2code-1000.png', true, 100, 14.99, 1, NOW());
+INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('BOOK-TECH-1000', 'Crash Course in Python', 'Learn Python at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-luv2code-1000.png', true, 100, 14.99, 1, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('BOOK-TECH-1001', 'Become a Guru in JavaScript', 'Learn JavaScript at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-luv2code-1001.png', true, 100, 20.99, 1, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('BOOK-TECH-1002', 'Exploring Vue.js', 'Learn Vue.js at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-luv2code-1002.png', true, 100, 14.99, 1, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('BOOK-TECH-1003', 'Advanced Techniques in Big Data', 'Learn Big Data at your own pace. The author explains how the technology works in easy-to-understand language. This book includes working examples that you can apply to your own projects. Purchase the book and get started today!', 'assets/images/products/books/book-luv2code-1003.png', true, 100, 13.99, 1, NOW());
@@ -80,8 +73,7 @@ INSERT INTO product (sku, name, description, image_url, active, units_in_stock, 
 -- Coffee Mugs
 -- -----------------------------------------------------
 
-INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created)
-VALUES ('COFFEEMUG-1000', 'Coffee Mug - Express", "Do you love mathematics? If so, then you need this elegant coffee mug with an amazing fractal design. You donot have to worry about boring coffee mugs anymore. This coffee mug will be the topic of conversation in the office, guaranteed! Buy it now!', 'assets/images/products/coffeemugs/coffeemug-luv2code-1000.png', true, 100, 18.99, 2, NOW());
+INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('COFFEEMUG-1000', 'Coffee Mug - Express', 'Do you love mathematics? If so, then you need this elegant coffee mug with an amazing fractal design. You donot have to worry about boring coffee mugs anymore. This coffee mug will be the topic of conversation in the office, guaranteed! Buy it now!', 'assets/images/products/coffeemugs/coffeemug-luv2code-1000.png', true, 100, 18.99, 2, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('COFFEEMUG-1001', 'Coffee Mug - Cherokee', 'Do you love mathematics? If so, then you need this elegant coffee mug with an amazing fractal design. You donot have to worry about boring coffee mugs anymore. This coffee mug will be the topic of conversation in the office, guaranteed! Buy it now!', 'assets/images/products/coffeemugs/coffeemug-luv2code-1001.png', true, 100, 18.99, 2, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('COFFEEMUG-1002', 'Coffee Mug - Sweeper', 'Do you love mathematics? If so, then you need this elegant coffee mug with an amazing fractal design. You donot have to worry about boring coffee mugs anymore. This coffee mug will be the topic of conversation in the office, guaranteed! Buy it now!', 'assets/images/products/coffeemugs/coffeemug-luv2code-1002.png', true, 100, 18.99, 2, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('COFFEEMUG-1003', 'Coffee Mug - Aspire', 'Do you love mathematics? If so, then you need this elegant coffee mug with an amazing fractal design. You donot have to worry about boring coffee mugs anymore. This coffee mug will be the topic of conversation in the office, guaranteed! Buy it now!', 'assets/images/products/coffeemugs/coffeemug-luv2code-1003.png', true, 100, 18.99, 2, NOW());
@@ -109,8 +101,7 @@ INSERT INTO product (sku, name, description, image_url, active, units_in_stock, 
 
 -- -----------------------------------------------------
 -- Mouse Pads
--- -----------------------------------------------------' ||
-'' ||
+-- -----------------------------------------------------
 
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('MOUSEPAD-1000', 'Mouse Pad - Express', 'Fractal images are amazing! You can now own a mouse pad with a unique and amazing fractal. The mouse pad is made of a durable and smooth material. Your mouse will easily glide across the mouse pad. This mouse pad will brighten your workspace. Buy it now!', 'assets/images/products/mousepads/mousepad-luv2code-1000.png', true, 100, 17.99, 3, NOW());
 INSERT INTO product (sku, name, description, image_url, active, units_in_stock, unit_price, category_id,date_created) VALUES ('MOUSEPAD-1001', 'Mouse Pad - Cherokee', 'Fractal images are amazing! You can now own a mouse pad with a unique and amazing fractal. The mouse pad is made of a durable and smooth material. Your mouse will easily glide across the mouse pad. This mouse pad will brighten your workspace. Buy it now!', 'assets/images/products/mousepads/mousepad-luv2code-1001.png', true, 100, 17.99, 3, NOW());
