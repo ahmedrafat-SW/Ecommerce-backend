@@ -1,12 +1,26 @@
 server:
   port: 8084
 
+baseUrl: /api/v2
+
 spring:
   application:
     name: ecommerce-backend
   data:
     rest:
       base-path: /api/v1
+    redis:
+      host: localhost
+      port: 6379
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+  cache:
+    redis:
+      cache-null-values: true
+  sql:
+    init:
+      mode: always
 
   datasource:
     url: jdbc:postgresql://localhost:5433/ecommerce_db
@@ -17,4 +31,22 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: false
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    defer-datasource-initialization: false
+
+
+logging:
+  level:
+    sql: trace
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: trace
+        type:
+          descriptor:
+            sql: trace

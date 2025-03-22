@@ -1,0 +1,35 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="AR" id="1742638217068-1">
+        <createTable tableName="product_category">
+            <column autoIncrement="true" name="id" startWith="5" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="product_category_pkey"/>
+            </column>
+            <column defaultValue="NULL::character varying" name="category_name" type="VARCHAR(255)"/>
+            <column name="date_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR" id="1742638217068-2">
+        <createTable tableName="product">
+            <column autoIncrement="true" name="id" startWith="101" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="product_pkey"/>
+            </column>
+            <column defaultValue="NULL::character varying" name="sku" type="VARCHAR(255)"/>
+            <column defaultValue="NULL::character varying" name="name" type="VARCHAR(255)"/>
+            <column defaultValue="NULL::character varying" name="description" type="VARCHAR(255)"/>
+            <column defaultValueComputed="NULL::numeric" name="unit_price" type="numeric(13, 2)"/>
+            <column defaultValue="NULL::character varying" name="image_url" type="VARCHAR(255)"/>
+            <column defaultValueBoolean="true" name="active" type="BOOLEAN"/>
+            <column name="units_in_stock" type="INTEGER"/>
+            <column name="date_created" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="last_updated" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="AR" id="1742638217068-3">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="product" constraintName="fk_category" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="product_category" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
