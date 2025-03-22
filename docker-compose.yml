@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: dockerfile-backend
+#    volumes:
+#      - ./target:/app/target
+#    command: mvn clean package -DskipTest
+#    working_dir: /app
+    image: ahemdrafat/ecommerce-backend:latest
+    ports:
+      - "8084:8084"
+    depends_on:
+      - db
+  db:
+    build:
+      context: .
+      dockerfile: dockerfile-db
+    image: ahemdrafat/ecommerce_db
+    environment:
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ecommerce_db
+    volumes:
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"

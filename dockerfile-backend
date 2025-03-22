@@ -1,0 +1,9 @@
+FROM openjdk:17-jdk-slim
+
+# Copy the JAR file into the Docker image
+COPY ./target/ecommerce-backend.jar /app/ecommerce-backend.jar
+
+EXPOSE 8084
+
+# Run the JAR file
+ENTRYPOINT ["java", "-jar", "/app/ecommerce-backend.jar"]
